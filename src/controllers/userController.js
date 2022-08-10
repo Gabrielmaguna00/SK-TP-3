@@ -1,12 +1,21 @@
 import * as services from "../services/userServices.js";
 
 export const getAllUsers = async (req, res) => {
-  const allUsers = await services.getAllUsers();
-  res.status(200).json({ status: "1ok!", data: allUsers });
+  try {
+    const allUsers = await services.getAllUsers();
+    res.status(200).json({ status: "Okey!", data: allUsers });
+  } catch (error) {
+    res.status(404).json({ status: "error", err: error });
+  }
 };
-export const getOneUser = (req, res) => {
-  const { id } = req.params;
-  res.status(200).send("2ok!");
+export const getOneUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await services.getOneUser(id);
+    res.status(200).json({ status: "okey", data: user });
+  } catch (error) {
+    res.status(404).json({ status: "error", error });
+  }
 };
 export const createNewUser = async (req, res) => {
   try {
@@ -27,8 +36,12 @@ export const createNewUser = async (req, res) => {
     const createdUser = await services.createNewUser(newUser);
     res.status(201).json({ status: "ok!", data: createdUser });
   } catch (error) {
-    console.log(error.meta)
-    res.send(error)
+    console.log(error.code[1]);
+    if (error.code[1] == 2) {
+      res
+        .status(400)
+        .json({ status: "error", err: "Bad request", reason: error.meta });
+    }
   }
 };
 export const updateUser = (req, res) => {

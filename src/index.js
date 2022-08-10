@@ -1,6 +1,7 @@
 import express from "express"
 import morgan from "morgan"
-import v1Routes from "./v1/routes/user.js"
+import v1UsersRoutes from "./v1/routes/user.js"
+// import v1PostsRoutes from "./v1/routes/post.js"
 const app = express()
 
 //variables
@@ -12,7 +13,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use(morgan("tiny"))
 
 //routes
-app.use("/", v1Routes)
+app.use("/user", v1UsersRoutes)
+// app.use("/post", )
 
 app.listen(app.get("port"), ()=>{
     console.log("Servidor en el puerto 3000"), app.get("port")

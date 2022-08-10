@@ -6,6 +6,15 @@ export const getAllUsers = async () => {
   return allUsers;
 };
 
+export const getOneUser = async (id) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: Number(id)
+    },
+  });
+  return user;
+};
+
 export const createNewUser = async (newUser) => {
   const createdUser = await prisma.user.create({
     data: newUser,
