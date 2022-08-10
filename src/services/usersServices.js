@@ -15,8 +15,8 @@ const createNewUser = (newUser) => {
   return createdUser;
 };
 
-const updateUser = (id) => {
-  const updatedUser = User.updateUser(id);
+const updateUser = (id, newData) => {
+  const updatedUser = User.updateUser(id, newData);
   return updatedUser;
 };
 

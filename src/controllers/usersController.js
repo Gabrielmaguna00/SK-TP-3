@@ -1,9 +1,12 @@
 const userServices = require("../services/usersServices");
 
 const getAllUsers = async (req, res) => {
-  const allUsers = await userServices.getAllUsers();
-
-  res.status(201).json({ status: "ok", data: allUsers });
+  try {
+    const allUsers = await userServices.getAllUsers();
+    res.status(200).json({ status: "Okey!", data: allUsers });
+  } catch (error) {
+    res.status(404).json({ status: "error", err: error });
+  }
 };
 
 const getOneUser = async (req, res) => {
@@ -16,8 +19,41 @@ const getOneUser = async (req, res) => {
 };
 
 const createNewUser = async (req, res) => {
-  const { name, age, email, country } = req.body;
+  try {
+    const { name, age, email, country } = req.body;
 
+    if (!name || !email || !age || !country) {
+      res.status(400).json({
+        status: "error",
+        err: "Empty fields",
+        reason: "There are incomplete fields",
+      });
+    }
+
+    const newUser = {
+      name: name,
+      age: age,
+      email: email,
+      country: country,
+    };
+
+    const createdUser = await userServices.createNewUser(newUser);
+    res
+      .status(201)
+      .json({ msg: "Nuevo usuario añadido con exito", data: createdUser });
+  } catch (error) {
+    console.log(error.code[1]);
+    if (error.code[1] == 2) {
+      res
+        .status(400)
+        .json({ status: "error", err: "Bad request", reason: error.meta });
+    }
+  }
+};
+
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { name, age, email, country } = req.body;
   if (!name || !email || !age || !country) {
     res.status(400).json({
       status: "error",
@@ -25,25 +61,24 @@ const createNewUser = async (req, res) => {
       reason: "There are incomplete fields",
     });
   }
+  try {
+    const newData = {
+      name: name,
+      age: Number(age),
+      email: email,
+      country: country,
+    };
 
-  const newUser = {
-    name: name,
-    age: age,
-    email: email,
-    country: country,
-  };
-
-  const createdUser = await userServices.createNewUser(newUser);
-  res
-    .status(201)
-    .json({ msg: "Nuevo usuario añadido con exito", data: createdUser });
-};
-
-const updateUser = async (req, res) => {
-  const { id } = req.params;
-  const updatedUser = await userServices.updateUser(id);
-
-  res.status(201).json({ msg: "Usuario actualizado", data: updatedUser });
+    const updatedUser = await userServices.updateUser(Number(id), newData);
+    res.status(201).json({ msg: "Usuario actualizado", data: updatedUser });
+  } catch (error) {
+    console.log(error.code[1]);
+    if (error.code[1] == 2) {
+      res
+        .status(400)
+        .json({ status: "error", err: "Bad request", reason: error.meta });
+    }
+  }
 };
 
 const deleteUser = async (req, res) => {
