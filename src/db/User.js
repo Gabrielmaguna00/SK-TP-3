@@ -27,7 +27,7 @@ const updateUser = async (id, newData) => {
     where: {
       id: id,
     },
-    data: newData,
+    data: newData
   });
   return updatedUser;
 };
