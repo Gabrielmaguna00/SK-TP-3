@@ -10,32 +10,35 @@ const getAllUsers = async (req, res) => {
 };
 
 const getOneUser = async (req, res) => {
-  const { id } = req.params;
-  const user = await userServices.getOneUser(Number(id));
-  res.status(201).json({
-    status: "ok",
-    data: user,
-  });
+  try {
+    const { id } = req.params;
+    const user = await userServices.getOneUser(Number(id));
+    res.status(201).json({
+      status: "ok",
+      data: user,
+    });
+  } catch (error) {
+    res.status(404).json({ status: "error", err: error });
+  }
 };
 
 const createNewUser = async (req, res) => {
-  const { name, age, email, country } = req.body;
-
-  if (!name || !email || !age || !country) {
-    res.status(400).json({
-      status: "error",
-      err: "Empty fields",
-      reason: "There are incomplete fields",
-    });
-  }
   try {
+    const { name, age, email, country } = req.body;
+
+    if (!name || !email || !age || !country) {
+      res.status(400).json({
+        status: "error",
+        err: "Empty fields",
+        reason: "There are incomplete fields",
+      });
+    }
     const newUser = {
       name: name,
       age: age,
       email: email,
       country: country,
     };
-
     const createdUser = await userServices.createNewUser(newUser);
     res
       .status(201)
@@ -51,16 +54,16 @@ const createNewUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { id } = req.params;
-  const { name, age, email, country } = req.body;
-  if (!name || !email || !age || !country) {
-    res.status(400).json({
-      status: "error",
-      err: "Empty fields",
-      reason: "There are incomplete fields",
-    });
-  }
   try {
+    const { id } = req.params;
+    const { name, age, email, country } = req.body;
+    if (!name || !email || !age || !country) {
+      res.status(400).json({
+        status: "error",
+        err: "Empty fields",
+        reason: "There are incomplete fields",
+      });
+    }
     const newData = {
       name: name,
       age: Number(age),
@@ -68,10 +71,8 @@ const updateUser = async (req, res) => {
       country: country,
     };
 
-    const updatedUser = await userServices.updateUser(Number(id),newData);
-    res
-      .status(201)
-      .json({ msg: "Usuario actualizado", data: updatedUser });
+    const updatedUser = await userServices.updateUser(Number(id), newData);
+    res.status(201).json({ msg: "Usuario actualizado", data: updatedUser });
   } catch (error) {
     console.log(error.code[1]);
     if (error.code[1] == 2) {
@@ -83,9 +84,14 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const { id } = req.params;
-  const deletedUser = await userServices.deleteUser(Number(id));
-  res.status(201).json({ msg: "Usuario eliminado", data: deletedUser });
+  try {
+    const { id } = req.params;
+    const deletedUser = await userServices.deleteUser(Number(id));
+    res.status(201).json({ msg: "Usuario eliminado", data: deletedUser });
+  }
+  catch (error) {
+    res.satus(404).json({ status: "error", err: error });
+  };
 };
 
 module.exports = {
