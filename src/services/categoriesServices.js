@@ -11,7 +11,7 @@ const getOneCategory = (id) => {
 };
 
 const createNewCategory = (newCategory) => {
-  const createdCategory = Category.CreateNewCategory(newCategory);
+  const createdCategory = Category.createNewCategory(newCategory);
   return createdCategory;
 };
 
