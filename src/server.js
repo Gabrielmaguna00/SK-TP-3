@@ -7,6 +7,7 @@ const v1UsersRoute = require('./v1/routes/users');
 const v1PostsRoute = require('./v1/routes/posts');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }))
 app.use(morgan('dev'));
 
 app.use('/api/v1/users', v1UsersRoute);

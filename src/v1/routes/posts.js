@@ -6,8 +6,9 @@ const postController = require("../../controllers/postsController");
 router
   .get("/", postController.getAllPosts)
   .get("/:id", postController.getOnePost)
-  .post("/", postController.createNewPost)
-  .put("/:id", postController.updatePost)
-  .delete("/:id", postController.deletePost)
+  .post("/:userId", postController.createNewPost)
+  .post("/draft/:userId", postController.createNewDraft)
+  .put("/:postId", postController.updatePost)
+  .delete("/:postId", postController.deletePost);
 
 module.exports = router;
