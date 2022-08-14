@@ -1,4 +1,4 @@
-const User = require("../db/User");
+const User = require("../db/UserDB");
 
 const getAllUsers = () => {
   const allUsers = User.getAllUsers();
