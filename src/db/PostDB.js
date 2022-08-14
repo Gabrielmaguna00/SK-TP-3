@@ -18,29 +18,38 @@ const getOnePost = async (id) => {
 const createNewPost = async (userId, newPost) => {
   const createdPost = await prisma.post.create({
     data: {
-      userId: userId,
+      userId,
       ...newPost,
+      published: true,
     },
   });
   return createdPost;
 };
 
-const updatePost = async (userId, postId, newData) => {
-  const updatedPost = await prisma.post.update({
+const createNewDraft = async (userId, newDraft) => {
+  const createdPost = await prisma.post.create({
+    data: {
+      userId,
+      ...newDraft,
+    },
+  });
+  return createdPost;
+};
+
+const updatePost = async (postId, newData) => {
+  const post = await prisma.post.update({
     where: {
       id: postId,
-      userId: userId,
     },
     data: newData,
   });
-  return updatedPost;
+  return post;
 };
 
-const deletePost = async (userId, postId) => {
+const deletePost = async (postId) => {
   const deletedPost = await prisma.post.delete({
     where: {
       id: postId,
-      userId: userId,
     },
   });
   return deletedPost;
@@ -50,6 +59,7 @@ module.exports = {
   getAllPosts,
   getOnePost,
   createNewPost,
+  createNewDraft,
   updatePost,
   deletePost,
 };

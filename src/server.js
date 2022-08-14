@@ -8,6 +8,7 @@ const v1PostsRoute = require('./v1/routes/posts');
 const v1CategoriesRoute = require('./v1/routes/categories');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }))
 app.use(morgan('dev'));
 
 

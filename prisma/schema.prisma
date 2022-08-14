@@ -7,35 +7,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  age       Int
-  createdAt DateTime @default(now())
-  country   String
-  posts     Post[]
-  role      Role     @default(USER)
+model category {
+  id   Int    @id @default(autoincrement())
+  name String
+  post post[] @relation("categorytopost")
 }
 
-model Post {
+model post {
   id        Int        @id @default(autoincrement())
   title     String?
   content   String
   createdAt DateTime   @default(now())
   published Boolean    @default(false)
-  category  Category[]
-  authorId  Int
-  author    User       @relation(fields: [authorId], references: [id])
+  userId    Int
+  user      user       @relation(fields: [userId], references: [id], map: "Post_userId_fkey")
+  category  category[] @relation("categorytopost")
+
+  @@index([userId], map: "Post_userId_fkey")
 }
 
-model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
-  posts Post[]
+model user {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique(map: "User_email_key")
+  age       Int
+  createdAt DateTime  @default(now())
+  country   String
+  role      user_role @default(USER)
+  post      post[]
 }
 
-enum Role {
+enum user_role {
   USER
   ADMIN
 }

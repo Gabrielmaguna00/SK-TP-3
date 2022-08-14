@@ -1,4 +1,4 @@
-const Post = require("../db/Post");
+const Post = require("../db/PostDB");
 
 const getAllPosts = () => {
   const allPosts = Post.getAllPosts();
@@ -15,13 +15,18 @@ const createNewPost = (userId, newPost) => {
   return createdPost;
 };
 
-const updatePost = (userId, postId, newData) => {
-  const updatedPost = Post.updatePost(userId, postId, newData);
+const createNewDraft = (userId, newDraft) => {
+  const createdPost = Post.createNewDraft(userId, newDraft);
+  return createdPost;
+};
+
+const updatePost = (postId, newData) => {
+  const updatedPost = Post.updatePost(postId, newData);
   return updatedPost;
 };
 
-const deletePost = (userId, postId) => {
-  const deletedPost = Post.deletePost(userId, postId);
+const deletePost = (postId) => {
+  const deletedPost = Post.deletePost(postId);
   return deletedPost;
 };
 
@@ -29,6 +34,7 @@ module.exports = {
   getAllPosts,
   getOnePost,
   createNewPost,
+  createNewDraft,
   updatePost,
   deletePost,
 };
