@@ -1,4 +1,4 @@
-const Category = require('../db/CategoryDB');
+const Category = require("../db/CategoryDB");
 
 const getAllCategories = () => {
   const allCategories = Category.getAllCategories();
@@ -25,10 +25,16 @@ const deleteCategory = (id) => {
   return deletedCategory;
 };
 
+const findOrCreate = (category) => {
+  const findCreate = Category.findOrCreate(category);
+  return findCreate;
+};
+
 module.exports = {
   getAllCategories,
   getOneCategory,
   createNewCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  findOrCreate,
 };
