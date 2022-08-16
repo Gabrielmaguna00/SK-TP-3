@@ -44,8 +44,8 @@ const createNewUser = async (req, res) => {
       .status(201)
       .json({ msg: "Nuevo usuario añadido con exito", data: createdUser });
   } catch (error) {
-    console.log(error.code[1]);
-    if (error.code[1] == 2) {
+    console.log(error);
+    if (error) {
       res
         .status(400)
         .json({ status: "error", err: "Bad request", reason: error.meta });
@@ -74,8 +74,8 @@ const updateUser = async (req, res) => {
     const updatedUser = await userServices.updateUser(Number(id), newData);
     res.status(201).json({ msg: "Usuario actualizado", data: updatedUser });
   } catch (error) {
-    console.log(error.code[1]);
-    if (error.code[1] == 2) {
+    console.log(error);
+    if (error) {
       res
         .status(400)
         .json({ status: "error", err: "Bad request", reason: error.meta });

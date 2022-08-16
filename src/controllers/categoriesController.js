@@ -77,8 +77,8 @@ const updateCategory = async (req, res) => {
       data: updatedCategory,
     });
   } catch (error) {
-    console.log(error.code[1]);
-    if (error.code[1] == 2) {
+    console.log(error);
+    if (error) {
       res.status(400).json({
         status: "error",
         err: "Bad request",
