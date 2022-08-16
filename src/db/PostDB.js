@@ -64,6 +64,29 @@ const deletePost = async (postId) => {
   return deletedPost;
 };
 
+const hidePostUsers = async (id) => {
+  const hidden = await prisma.post.updateMany({
+    where: {
+      userId: id,
+    },
+    data: {
+      published: false,
+    },
+  });
+};
+
+const publishDraft = async (id) => {
+  const published = await prisma.post.update({
+    where: {
+      id,
+    },
+    data: {
+      published: true,
+    },
+  });
+  return published
+};
+
 module.exports = {
   getAllPosts,
   getOnePost,
@@ -71,5 +94,7 @@ module.exports = {
   createNewPost,
   createNewDraft,
   updatePost,
-  deletePost
+  deletePost,
+  hidePostUsers,
+  publishDraft
 };

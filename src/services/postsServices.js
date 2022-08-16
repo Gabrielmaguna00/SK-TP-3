@@ -30,9 +30,19 @@ const updatePost = (postId, newData) => {
   return updatedPost;
 };
 
+const hidePostUsers = (id) => {
+  const hidden = Post.hidePostUsers(id);
+  return hidden;
+};
+
 const deletePost = (postId) => {
   const deletedPost = Post.deletePost(postId);
   return deletedPost;
+};
+
+const publishDraft = (id) => {
+  const publishedDraft = Post.publishDraft(id);
+  return publishedDraft;
 };
 
 module.exports = {
@@ -43,4 +53,6 @@ module.exports = {
   createNewDraft,
   updatePost,
   deletePost,
+  hidePostUsers,
+  publishDraft,
 };
