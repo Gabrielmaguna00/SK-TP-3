@@ -27,16 +27,20 @@ const updateUser = async (id, newData) => {
     where: {
       id: id,
     },
-    data: newData
+    data: newData,
   });
   return updatedUser;
 };
 
 const deleteUser = async (id) => {
-  const deletedUser = await prisma.user.delete({
+  console.log(typeof id)
+  const deletedUser = await prisma.user.update({
     where: {
-      id: id,
+      id,
     },
+    data:{
+      visibility: false
+    }
   });
   return deletedUser;
 };

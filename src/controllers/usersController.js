@@ -1,4 +1,5 @@
 const userServices = require("../services/usersServices");
+const postServices = require("../services/postsServices");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -86,12 +87,12 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
+    const hiddenPostUserId = await postServices.hidePostUsers(Number(id));
     const deletedUser = await userServices.deleteUser(Number(id));
     res.status(201).json({ msg: "Usuario eliminado", data: deletedUser });
+  } catch (error) {
+    res.status(404).json({ status: "error", err: error });
   }
-  catch (error) {
-    res.satus(404).json({ status: "error", err: error });
-  };
 };
 
 module.exports = {

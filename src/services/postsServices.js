@@ -25,6 +25,11 @@ const updatePost = (postId, newData) => {
   return updatedPost;
 };
 
+const hidePostUsers = (id) => {
+  const hidden = Post.hidePostUsers(id);
+  return hidden;
+};
+
 const deletePost = (postId) => {
   const deletedPost = Post.deletePost(postId);
   return deletedPost;
@@ -37,4 +42,5 @@ module.exports = {
   createNewDraft,
   updatePost,
   deletePost,
+  hidePostUsers,
 };
