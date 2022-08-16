@@ -15,6 +15,15 @@ const getOnePost = async (id) => {
   return post;
 };
 
+const getPostFromOneUser = async (userId) => {
+  const userPosts = await prisma.post.findMany({
+    where: {
+      authorId: userId,
+    },
+  });
+  return userPosts
+};
+
 const createNewPost = async (userId, newPost) => {
   const createdPost = await prisma.post.create({
     data: {
@@ -58,8 +67,9 @@ const deletePost = async (postId) => {
 module.exports = {
   getAllPosts,
   getOnePost,
+  getPostFromOneUser,
   createNewPost,
   createNewDraft,
   updatePost,
-  deletePost,
+  deletePost
 };

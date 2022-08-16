@@ -10,6 +10,11 @@ const getOnePost = (id) => {
   return post;
 };
 
+const getPostFromOneUser = (userId) => {
+  const userPosts = Post.getPostFromOneUser(userId);
+  return userPosts;
+};
+
 const createNewPost = (userId, newPost) => {
   const createdPost = Post.createNewPost(userId, newPost);
   return createdPost;
@@ -33,6 +38,7 @@ const deletePost = (postId) => {
 module.exports = {
   getAllPosts,
   getOnePost,
+  getPostFromOneUser,
   createNewPost,
   createNewDraft,
   updatePost,
