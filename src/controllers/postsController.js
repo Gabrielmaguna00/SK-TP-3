@@ -1,4 +1,6 @@
 const postServices = require("../services/postsServices");
+const categoryServices = require("../services/categoriesServices")
+const categoriesPostServices = require("../services/categoriesToPostServices")
 
 const getAllPosts = async (req, res) => {
   try {
@@ -21,12 +23,18 @@ const getOnePost = async (req, res) => {
 
 const createNewPost = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { userId, category } = req.params;
+    // console.log(userId, category.toLowerCase())
+    const categoryExisting = await categoryServices.findOrCreate(category.toLowerCase())
+    // console.log("sali")
     const newPost = req.body;
     const createdPost = await postServices.createNewPost(
       Number(userId),
-      newPost
+      newPost,
+      category.toLowerCase()
     );
+    // console.log("despues de create new post", createdPost.id)
+    const categoriesToPost = categoriesPostServices.categoryPost(categoryExisting, createdPost.id)
     res.status(201).json({ status: "Post created", data: createdPost });
   } catch (error) {
     res.status(404).json({ status: "error", err: error });

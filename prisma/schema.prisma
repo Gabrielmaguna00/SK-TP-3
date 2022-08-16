@@ -9,7 +9,7 @@ datasource db {
 
 model category {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
   post post[] @relation("categorytopost")
 }
 
@@ -35,6 +35,14 @@ model user {
   country   String
   role      user_role @default(USER)
   post      post[]
+}
+
+model categoryToPost {
+A Int
+B Int 
+
+@@unique([A, B])
+@@map("_categorytopost")
 }
 
 enum user_role {

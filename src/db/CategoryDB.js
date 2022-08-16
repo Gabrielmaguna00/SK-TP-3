@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const getAllCategories = async () => { 
+const getAllCategories = async () => {
   const allCategories = await prisma.category.findMany();
   return allCategories;
 };
@@ -17,7 +17,7 @@ const getOneCategory = async (id) => {
 
 const createNewCategory = async (newCategory) => {
   const createdCategory = await prisma.category.create({
-    data: newCategory
+    data: newCategory,
   });
   return createdCategory;
 };
@@ -36,9 +36,24 @@ const deleteCategory = async (id) => {
   const deletedCategory = await prisma.category.delete({
     where: {
       id: id,
-    }
+    },
   });
   return deletedCategory;
+};
+
+const findOrCreate = async (category) => {
+  console.log(category)
+  const findCreate = await prisma.category.upsert({
+    where: {
+      name: category,
+    },
+    update: {},
+    create: {
+      name: category,
+    },
+  });
+  console.log("devuelvo esto category", findCreate)
+  return findCreate.id;
 };
 
 module.exports = {
@@ -46,5 +61,6 @@ module.exports = {
   getOneCategory,
   createNewCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  findOrCreate,
 };
