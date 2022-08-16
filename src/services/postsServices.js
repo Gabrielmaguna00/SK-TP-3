@@ -35,6 +35,11 @@ const deletePost = (postId) => {
   return deletedPost;
 };
 
+const publishDraft = (id) => {
+  const publishedDraft = Post.publishDraft(id);
+  return publishedDraft;
+};
+
 module.exports = {
   getAllPosts,
   getOnePost,
@@ -43,4 +48,5 @@ module.exports = {
   updatePost,
   deletePost,
   hidePostUsers,
+  publishDraft,
 };

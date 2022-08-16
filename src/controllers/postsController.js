@@ -62,6 +62,16 @@ const createNewDraft = async (req, res) => {
   }
 };
 
+const publishDraft = async (req, res) => {
+  try {
+    const {draftId}= req.params;
+    const publishedDraft = await postServices.publishDraft(Number(draftId))
+    res.status(204).json({ status: "Published", data: publishedDraft})
+  } catch (error) {
+    res.status(404).json({ status: "error", err: error });
+  }
+}
+
 const updatePost = async (req, res) => {
   try {
     const { postId } = req.params;
@@ -90,4 +100,5 @@ module.exports = {
   createNewDraft,
   updatePost,
   deletePost,
+  publishDraft
 };

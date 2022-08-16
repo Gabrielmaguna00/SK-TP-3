@@ -66,6 +66,18 @@ const hidePostUsers = async (id) => {
   });
 };
 
+const publishDraft = async (id) => {
+  const published = await prisma.post.update({
+    where: {
+      id,
+    },
+    data: {
+      published: true,
+    },
+  });
+  return published
+};
+
 module.exports = {
   getAllPosts,
   getOnePost,
@@ -74,4 +86,5 @@ module.exports = {
   updatePost,
   deletePost,
   hidePostUsers,
+  publishDraft
 };
