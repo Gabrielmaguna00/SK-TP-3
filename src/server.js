@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 
 const app = express();
-const PORT =  process.env.PORT || 3000;
+const PORT = env("PORT") || 3000;
 const v1UsersRoute = require('./v1/routes/users');
 const v1PostsRoute = require('./v1/routes/posts');
 const v1CategoriesRoute = require('./v1/routes/categories');
