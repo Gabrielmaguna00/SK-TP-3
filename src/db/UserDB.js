@@ -11,6 +11,9 @@ const getOneUser = async (id) => {
     where: {
       id: id,
     },
+    include:{
+      post:true
+    }
   });
   return user;
 };

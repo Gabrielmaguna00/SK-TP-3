@@ -14,11 +14,9 @@ const getOneUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await userServices.getOneUser(Number(id));
-    const userPost = await postServices.getPostFromOneUser(Number(id));
     res.status(201).json({
       status: "ok",
       data: user,
-      posts: userPost
     });
   } catch (error) {
     console.log(error)
