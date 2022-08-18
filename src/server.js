@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
+const dotenv = require('dotenv');
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 const v1UsersRoute = require('./v1/routes/users');
